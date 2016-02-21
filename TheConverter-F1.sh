@@ -39,7 +39,9 @@ do
 	$FFMPEG -y -i ${FOLDER}/${MOVIE}_${LAYER}000.mp4 -vn -c:a ${AUDIO_ENC} -ar 48000 -ac 2 -vbr 5 ${FOLDER}/${MOVIE}_${LAYER}000.aac
 
 	# Converting the video track to H264
-	$FFMPEG -y -i ${FOLDER}/${MOVIE}_${LAYER}000.vc1 -r 25 -pix_fmt yuv420p -c:v ${VIDEO_ENC} -x264opts threads=0:bitrate=${LAYER}:vbv-maxrate=${LAYER}:vbv-bufsize=${LAYER}:level=51:bframes=2:b-adapt=2:b-pyramid=0:ref=2:deblock=-1,-1:chroma-qp-offset=1:mvrange=511:aq-mode=1:trellis=2:me=hex:subme=7:intra-refresh=0:partitions=all:keyint=33:min-keyint=33:scenecut=-1 ${FOLDER}/${MOVIE}_${LAYER}000.h264
+	$FFMPEG -y -i ${FOLDER}/${MOVIE}_${LAYER}000.vc1 -r 25 -pix_fmt yuv420p -c:v ${VIDEO_ENC} \
+	-x264opts threads=0:bitrate=${LAYER}:vbv-maxrate=${LAYER}:vbv-bufsize=${LAYER}:level=51:bframes=2:b-adapt=2:b-pyramid=0:ref=2:deblock=-1,-1:chroma-qp-offset=1:mvrange=511:aq-mode=1:trellis=2:me=hex:subme=7:intra-refresh=0:partitions=all:keyint=33:min-keyint=33:scenecut=-1 \
+	${FOLDER}/${MOVIE}_${LAYER}000.h264
 
 	# Joining the audio and video track MP4 container
 	MP4Box -brand mp42 -no-iod -mpeg4 -add "${FOLDER}/${MOVIE}_${LAYER}000.h264:name=${MOVIE}_${LAYER}000.h264:lang=${ORG_LANG}" ${FOLDER}/${MOVIE}_${LAYER}.mp4
